@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Placement Tracker | Dashboard</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="dashboard">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="dashboard-logo">
+            <div class="logo">PT</div>
+
+            <div>
+                <h2>Placement <span>Tracker</span></h2>
+                <p>Career Platform</p>
+            </div>
+        </div>
+
+
+        <nav class="sidebar-nav">
+
+            <a href="#" class="active">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="companies.html">
+                <span>🏢</span>
+                Companies
+            </a>
+
+            <a href="#">
+                <span>📝</span>
+                Applications
+            </a>
+
+            <a href="#">
+                <span>📅</span>
+                Interviews
+            </a>
+
+            <a href="#">
+                <span>✓</span>
+                Selected
+            </a>
+
+        </nav>
+
+
+        <div class="sidebar-bottom">
+
+            <a href="#">
+                ⚙️ &nbsp; Settings
+            </a>
+
+            <a href="#" id="logoutBtn">
+                ← &nbsp; Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- ADD APPLICATION MODAL -->
+<div class="application-modal" id="applicationModal">
+
+    <div class="application-modal-card">
+
+        <div class="modal-header">
+            <div>
+                <h2>Add Application</h2>
+                <p>Save a new placement application.</p>
+            </div>
+
+            <button id="closeApplicationModal" class="modal-close">
+                ×
+            </button>
+        </div>
+
+
+        <form id="applicationForm">
+
+            <label>Company</label>
+
+            <select id="companyId" required>
+                <option value="">Select company</option>
+            </select>
+
+
+            <label>Application Date</label>
+
+            <input
+                type="date"
+                id="applicationDate"
+                required
+            >
+
+
+            <label>Status</label>
+
+            <select id="applicationStatus">
+
+                <option value="Applied">
+                    Applied
+                </option>
+
+                <option value="Shortlisted">
+                    Shortlisted
+                </option>
+
+                <option value="Interview">
+                    Interview
+                </option>
+
+                <option value="Selected">
+                    Selected
+                </option>
+
+                <option value="Rejected">
+                    Rejected
+                </option>
+
+            </select>
+
+
+            <label>Notes</label>
+
+            <textarea
+                id="applicationNotes"
+                placeholder="Add some notes..."
+            ></textarea>
+
+
+            <button type="submit" class="modal-submit">
+                Add Application
+            </button>
+
+            <p id="applicationMessage"></p>
+
+        </form>
+
+    </div>
+
+</div>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <!-- TOP BAR -->
+        <header class="dashboard-header">
+
+            <div>
+                <p class="dashboard-label">
+                    STUDENT DASHBOARD
+                </p>
+
+                <h1 id="greeting">
+                    Good morning! 👋
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Here's what's happening with your placement journey.
+                </p>
+            </div>
+
+
+            <div class="header-profile">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+                    <strong id="userName">Student</strong>
+                    <span>Placement Candidate</span>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- STATS -->
+        <section class="dashboard-stats">
+
+            <div class="dashboard-card">
+
+                <div class="card-icon purple">
+                    🏢
+                </div>
+
+                <div>
+                    <p>Total Companies</p>
+                    <h2>24</h2>
+                    <span class="positive">
+                        ↑ 12% this month
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon blue">
+                    📝
+                </div>
+
+                <div>
+                    <p>Applications</p>
+                    <h2>18</h2>
+                    <span class="positive">
+                        ↑ 8% this month
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon orange">
+                    📅
+                </div>
+
+                <div>
+                    <p>Interviews</p>
+                    <h2>6</h2>
+                    <span class="neutral">
+                        2 upcoming
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="dashboard-card">
+
+                <div class="card-icon green">
+                    ✓
+                </div>
+
+                <div>
+                    <p>Selected</p>
+                    <h2>2</h2>
+                    <span class="positive">
+                        Great progress!
+                    </span>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- CONTENT GRID -->
+        <section class="dashboard-grid">
+
+            <!-- APPLICATION PROGRESS -->
+            <div class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Application Progress</h2>
+                        <p>Your placement application overview</p>
+                    </div>
+
+                    <button class="view-btn">
+                        View All
+                    </button>
+
+                </div>
+
+
+                <div class="progress-container">
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+                            <span>Applied</span>
+                            <strong id="appliedCount">0</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill applied"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+                            <span>Shortlisted</span>
+                            <strong id="shortlistedCount">0</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill shortlisted"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+                            <span>Interview</span>
+                            <strong id="interviewCount">0</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill interview"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="progress-item">
+
+                        <div class="progress-top">
+                            <span>Selected</span>
+                            <strong id="selectedCount">0</strong>
+                        </div>
+
+                        <div class="progress-bar">
+                            <div class="progress-fill selected"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- UPCOMING INTERVIEWS -->
+            <div class="dashboard-panel">
+
+                <div class="panel-header">
+
+                    <div>
+                        <h2>Upcoming Interviews</h2>
+                        <p>Don't miss your opportunities</p>
+                    </div>
+
+                    <button class="view-btn">
+                        View All
+                    </button>
+
+                </div>
+
+
+                <div class="interview-list">
+
+                    <div class="interview-item">
+
+                        <div class="company-logo">
+                            T
+                        </div>
+
+                        <div class="interview-info">
+                            <strong>Tech Solutions</strong>
+                            <span>Software Developer</span>
+                        </div>
+
+                        <div class="interview-date">
+                            <strong>Sep 12</strong>
+                            <span>10:00 AM</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="interview-item">
+
+                        <div class="company-logo">
+                            I
+                        </div>
+
+                        <div class="interview-info">
+                            <strong>Innovate Labs</strong>
+                            <span>Frontend Developer</span>
+                        </div>
+
+                        <div class="interview-date">
+                            <strong>Sep 15</strong>
+                            <span>02:00 PM</span>
+                        </div>
+
+                    </div>
+
+
+                    <div class="interview-item">
+
+                        <div class="company-logo">
+                            G
+                        </div>
+
+                        <div class="interview-info">
+                            <strong>Global Systems</strong>
+                            <span>Full Stack Developer</span>
+                        </div>
+
+                        <div class="interview-date">
+                            <strong>Sep 18</strong>
+                            <span>11:30 AM</span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RECENT APPLICATIONS -->
+        <section class="dashboard-panel recent-panel">
+
+            <div class="panel-header">
+
+                <div>
+                    <h2>Recent Applications</h2>
+                    <p>Track your latest applications</p>
+                </div>
+
+                <button class="primary-small" id="addApplicationBtn">
+                    + Add Application
+                </button>
+
+            </div>
+
+
+            <div class="application-table">
+
+                <div class="table-row table-heading">
+                    <span>Company</span>
+                    <span>Role</span>
+                    <span>Date Applied</span>
+                    <span>Status</span>
+                </div>
+
+
+                <div class="table-row">
+
+                    <span class="company-name">
+                        Tech Solutions
+                    </span>
+
+                    <span>
+                        Software Developer
+                    </span>
+
+                    <span>
+                        Sep 05, 2026
+                    </span>
+
+                    <span class="status applied-status">
+                        Applied
+                    </span>
+
+                </div>
+
+
+                <div class="table-row">
+
+                    <span class="company-name">
+                        Innovate Labs
+                    </span>
+
+                    <span>
+                        Frontend Developer
+                    </span>
+
+                    <span>
+                        Sep 03, 2026
+                    </span>
+
+                    <span class="status interview-status">
+                        Interview
+                    </span>
+
+                </div>
+
+
+                <div class="table-row">
+
+                    <span class="company-name">
+                        Global Systems
+                    </span>
+
+                    <span>
+                        Full Stack Developer
+                    </span>
+
+                    <span>
+                        Aug 29, 2026
+                    </span>
+
+                    <span class="status selected-status">
+                        Selected
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/dashboard.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Companies | Placement Tracker</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <div class="dashboard">
+    
+    <!-- SIDEBAR -->
+    
+    <aside class="sidebar">
+
+        <div class="dashboard-logo">
+            <div class="logo">PT</div>
+
+            <div>
+                <h2>Placement <span>Tracker</span></h2>
+                <p>Career Platform</p>
+            </div>
+        </div>
+
+
+        <!-- NAVIGATION -->
+
+        <nav class="sidebar-nav">
+
+            <a href="dashboard.html">
+                <span>▦</span>
+                Dashboard
+            </a>
+
+            <a href="companies.html" class="active">
+                <span>🏢</span>
+                Companies
+            </a>
+
+            <a href="#">
+                <span>📝</span>
+                Applications
+            </a>
+
+            <a href="#">
+                <span>🎤</span>
+                Interviews
+            </a>
+
+            <a href="#">
+                <span>⭐</span>
+                Selected
+            </a>
+
+        </nav>
+
+
+        <!-- SIDEBAR BOTTOM -->
+
+        <div class="sidebar-bottom">
+
+            <a href="#">
+                ⚙️ &nbsp; Settings
+            </a>
+
+            <a href="login.html">
+                ← &nbsp; Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+
+    <main class="dashboard-main">
+
+        <!-- TOP BAR -->
+
+        <header class="dashboard-header">
+
+            <div>
+
+                <p class="dashboard-label">
+                    COMPANIES
+                </p>
+
+                <h1>
+                    Explore Companies 🏢
+                </h1>
+
+                <p class="dashboard-subtitle">
+                    Discover companies and available placement opportunities.
+                </p>
+
+            </div>
+
+
+            <div class="header-profile">
+
+                <div class="notification">
+                    🔔
+                </div>
+
+                <div class="profile-avatar">
+                    A
+                </div>
+
+                <div class="profile-info">
+
+                    <strong id="userName">
+                        Student
+                    </strong>
+
+                    <span>
+                        Placement Candidate
+                    </span>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- COMPANY SECTION -->
+
+        <section class="companies-section">
+
+            <div class="section-heading">
+
+                <div>
+
+                    <h2>
+                        Available Companies
+                    </h2>
+
+                    <p>
+                        Placement opportunities available for students.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- COMPANY CARDS -->
+
+            <div class="companies-grid" id="companiesGrid">
+
+                <!-- Companies will be loaded here -->
+
+            </div>
+
+        </section>
+
+    </main>
+    
+    </div>
+
+    <script>
+
+        // ===============================
+        // LOAD USER NAME
+        // ===============================
+
+        function loadUserName() {
+
+            const user =
+                JSON.parse(localStorage.getItem("user"));
+
+            if (user) {
+
+                document.getElementById("userName").textContent =
+                    user.name;
+
+            }
+
+        }
+
+
+        // ===============================
+        // LOAD COMPANIES
+        // ===============================
+
+        async function loadCompanies() {
+
+            try {
+
+                const response =
+                    await fetch("/api/companies");
+
+                const companies =
+                    await response.json();
+
+                const companiesGrid =
+                    document.getElementById("companiesGrid");
+
+                companiesGrid.innerHTML = "";
+
+
+                companies.forEach(company => {
+
+                    const card =
+                        document.createElement("div");
+
+                    card.className =
+                        "company-card";
+
+
+                    card.innerHTML = `
+
+                        <div class="company-card-top">
+
+                            <div class="company-icon">
+                                🏢
+                            </div>
+
+                            <span class="company-status">
+                                ${company.status}
+                            </span>
+
+                        </div>
+
+
+                        <h3>
+                            ${company.company_name}
+                        </h3>
+
+
+                        <p class="company-role">
+                            ${company.job_role}
+                        </p>
+
+
+                        <div class="company-details">
+
+                            <div>
+                                <span>💰 Package</span>
+                                <strong>${company.package || "-"}</strong>
+                            </div>
+
+                            <div>
+                                <span>📍 Location</span>
+                                <strong>${company.location || "-"}</strong>
+                            </div>
+
+                        </div>
+
+
+                        <div class="company-deadline">
+
+                            <span>
+                                Application Deadline
+                            </span>
+
+                            <strong>
+                                ${company.application_deadline || "-"}
+                            </strong>
+
+                        </div>
+
+                        <button class="apply-company-btn" data-company-id="${company.id}">
+                            Apply Now
+                        </button>
+
+                    `;
+
+
+                    companiesGrid.appendChild(card);
+
+                });
+
+            } catch (error) {
+
+                console.error(
+                    "Companies Error:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        loadUserName();
+        loadCompanies();
+
+        document.addEventListener("click", (event) => {
+
+    if (event.target.classList.contains("apply-company-btn")) {
+
+        const companyId =
+            event.target.getAttribute("data-company-id");
+
+        localStorage.setItem("selectedCompanyId", companyId);
+
+        window.location.href = "dashboard.html";
+    }
+
+});
+
+    </script>
+
+</body>
+
+</html>
